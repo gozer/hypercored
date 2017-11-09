@@ -104,3 +104,12 @@ resource "aws_security_group" "hypercored" {
     create_before_destroy = true
   }
 }
+
+module "dns" {
+  source       = "github.com/nubisproject/nubis-terraform//dns?ref=v2.0.1"
+  region       = "${var.region}"
+  environment  = "${var.environment}"
+  account      = "${var.account}"
+  service_name = "${var.service_name}"
+  target       = "${aws_eip.hypercored.public_ip}"
+}
