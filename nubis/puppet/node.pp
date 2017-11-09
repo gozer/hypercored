@@ -49,3 +49,9 @@ upstart::job { $project_name:
     group          => "${project_name}-data",
     exec           => "/usr/bin/forever --workingDir /var/www/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored --websockets --port 3283",
 }
+
+include nubis_discovery
+
+nubis::discovery::service { $project_name:
+  http      => 'http://localhost:3283',
+}
