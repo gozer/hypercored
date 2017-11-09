@@ -47,5 +47,5 @@ upstart::job { $project_name:
     },
     user           => "${project_name}-data",
     group          => "${project_name}-data",
-    exec           => "/usr/bin/forever --workingDir /var/www/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored",
+    exec           => "/usr/bin/forever --workingDir /var/www/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored --websockets --port 3283",
 }
