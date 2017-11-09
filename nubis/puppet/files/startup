@@ -1,0 +1,27 @@
+#!/bin/bash                                                                                                                                                                                                 
+                                                                                                                                                                                                            
+export PATH=/usr/local/bin:$PATH                                                                                                                                                                            
+                                                                                                                                                                                                            
+eval "$(nubis-metadata)"                                                                                                                                                                                    
+region=$(nubis-region)                                                                                                                                                                                      
+                                                                                                                                                                                                            
+instance_id=$(curl -s -fq http://169.254.169.254/latest/meta-data/instance-id)                                                                                                                              
+                                                                                                                                                                                                            
+# Search in Consul first                                                                                                                                                                                    
+eip_id=$(consul-cli kv read "${NUBIS_PROJECT}-${NUBIS_ENVIRONMENT}/${NUBIS_ENVIRONMENT}/config/ElasticIP")                                                                                                  
+
+# Then look at cloudformation
+if [ "$eip_id" == "" ]; then
+  # Look up our EIP ID
+  eip_id=$(aws --region "$region" cloudformation describe-stacks --stack-name "$NUBIS_STACK" | jq --raw-output '.Stacks[].Outputs[] | select(.OutputKey=="ElasticIP") | .OutputValue')
+fi
+
+# Check to see if our EIP is already associated
+if [[ "$eip_id" ]]; then
+   association_id=$(aws --region "$region" ec2 describe-addresses --allocation-ids "$eip_id" | jq '.Addresses[] | select(.AssociationId != null) | .AssociationId')
+
+   # If the association_id is empty, then associate the EIP
+   if [[ -z "$association_id" ]]; then
+      aws --region "$region" ec2 associate-address --instance-id "$instance_id" --allocation-id "$eip_id"
+   fi
+fi
