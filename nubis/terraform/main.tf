@@ -12,6 +12,8 @@ module "worker" {
   security_group        = "${aws_security_group.hypercored.id}"
   security_group_custom = true
 
+  root_storage_size = "32"
+
   instance_type = "${lookup(var.instance_types, var.environment, lookup(var.instance_types, "default"))}"
 }
 
