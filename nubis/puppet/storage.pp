@@ -15,11 +15,11 @@ user { "${project_name}-data":
   ],
 }
 
-file { "/var/www":
-  ensure  => 'directory',
-  owner   => "root",
-  group   => "root",
-  mode    => '0775',
+file { '/var/www':
+  ensure => 'directory',
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0775',
 }
 
 file { "/var/www/${project_name}":
@@ -36,8 +36,8 @@ file { "/var/www/${project_name}":
 
 file { "/var/www/${project_name}/feeds":
   ensure  => 'file',
-  owner   => "root",
-  group   => "root",
+  owner   => 'root',
+  group   => 'root',
   mode    => '0664',
   require => [
     Group["${project_name}-data"],
