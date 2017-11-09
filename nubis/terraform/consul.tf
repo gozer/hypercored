@@ -18,7 +18,7 @@ provider "consul" {
 resource "consul_keys" "config" {
   key {
     path   = "${module.consul.config_prefix}/ElasticIP"
-    value  = "${aws_eip.dns.id}"
+    value  = "${aws_eip.hypercored.id}"
     delete = true
   }
 }
