@@ -78,6 +78,13 @@ resource "aws_security_group" "hypercored" {
   }
 
   ingress {
+    from_port   = 3283
+    to_port     = 3283
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 3282
     to_port     = 3282
     protocol    = "udp"
