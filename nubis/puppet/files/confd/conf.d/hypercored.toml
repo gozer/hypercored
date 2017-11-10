@@ -1,6 +1,6 @@
 [template]
 src = "%%PROJECT%%.tmpl"
-dest = "/var/www/%%PROJECT%%/feeds"
+dest = "/data/%%PROJECT%%/feeds"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

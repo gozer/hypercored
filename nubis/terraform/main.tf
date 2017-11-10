@@ -17,6 +17,16 @@ module "worker" {
   instance_type = "${lookup(var.instance_types, var.environment, lookup(var.instance_types, "default"))}"
 }
 
+module "storage" {
+  source                 = "github.com/nubisproject/nubis-terraform//storage?ref=v2.0.1"
+  region                 = "${var.region}"
+  environment            = "${var.environment}"
+  account                = "${var.account}"
+  service_name           = "${var.service_name}"
+  storage_name           = "${var.service_name}"
+  client_security_groups = "${module.worker.security_group}"
+}
+
 module "info" {
   source      = "github.com/nubisproject/nubis-terraform//info?ref=v2.0.1"
   region      = "${var.region}"

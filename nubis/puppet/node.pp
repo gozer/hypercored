@@ -41,13 +41,13 @@ upstart::job { $project_name:
     respawn        => true,
     respawn_limit  => 'unlimited',
     start_on       => '(local-filesystems and net-device-up IFACE!=lo)',
-    chdir          => "/var/www/${project_name}",
+    chdir          => "/data/${project_name}",
     env            => {
-      'HOME' => "/var/www/${project_name}",
+      'HOME' => "/data/${project_name}",
     },
     user           => "${project_name}-data",
     group          => "${project_name}-data",
-    exec           => "/usr/bin/forever --workingDir /var/www/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored --websockets --port 3283",
+    exec           => "/usr/bin/forever --workingDir /data/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored --websockets --port 3283",
 }
 
 include nubis_discovery
