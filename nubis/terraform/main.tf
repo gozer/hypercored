@@ -121,4 +121,5 @@ module "dns" {
   account      = "${var.account}"
   service_name = "${var.service_name}"
   target       = "${aws_eip.hypercored.public_ip}"
+  type         = "A"
 }
