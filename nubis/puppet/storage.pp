@@ -2,8 +2,8 @@ include nubis_storage
 
 nubis::storage { $project_name:
   type  => 'efs',
-  owner => '${project_name}-data',
-  group => '${project_name}-data',
+  owner => "${project_name}-data",
+  group => "${project_name}-data",
 }
 
 # Create a user and a group for this
