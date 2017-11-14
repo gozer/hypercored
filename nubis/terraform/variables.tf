@@ -19,7 +19,7 @@ variable "instance_types" {
 
   default = {
     prod      = "t2.micro"
-    stage     = "t2.nano"
+    stage     = "t2.large"
     default   = "t2.nano"
   }
 }
