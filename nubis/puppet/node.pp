@@ -20,7 +20,7 @@ package { 'awscli':
   ensure => 'latest'
 }
 
-file { "/etc/nubis.d/$project_name":
+file { "/etc/nubis.d/${project_name}":
     ensure => file,
     owner  => root,
     group  => root,
@@ -28,26 +28,35 @@ file { "/etc/nubis.d/$project_name":
     source => 'puppet:///nubis/files/startup',
 }
 
-# Create the service with upstart
-include 'upstart'
+systemd::unit_file { "${project_name}.service":
+  content => @("EOT")
+[Unit]
+Description=DAT Hypercored
+Wants=basic.target
+After=basic.target network.target
 
-upstart::job { $project_name:
-    description    => 'DAT Hypercored',
+[Service]
+Restart=on-failure
+RestartSec=10s
+User=${project_name}-data
+Group=${project_name}-data
+WorkingDirectory=/data/${project_name}
 
-    service_ensure => 'stopped',
-    service_enable => true,
+Env=HOME=/data/${project_name}
 
-    # Never give up
-    respawn        => true,
-    respawn_limit  => 'unlimited',
-    start_on       => '(local-filesystems and net-device-up IFACE!=lo)',
-    chdir          => "/data/${project_name}",
-    env            => {
-      'HOME' => "/data/${project_name}",
-    },
-    user           => "${project_name}-data",
-    group          => "${project_name}-data",
-    exec           => "/usr/bin/forever --workingDir /data/${project_name} --minUptime 1000 --spinSleepTime 1000 /usr/bin/hypercored --websockets --port 3283",
+ExecStart=/usr/bin/hypercored \
+  --websockets \
+  --port 3283 \
+
+
+# Above line empty on purpose
+[Install]
+WantedBy=multi-user.target
+
+EOT
+} ~> service { $project_name:
+  ensure => 'stopped',
+  enable => true,
 }
 
 include nubis_discovery

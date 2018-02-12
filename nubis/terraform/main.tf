@@ -1,5 +1,5 @@
 module "worker" {
-  source       = "github.com/nubisproject/nubis-terraform//worker?ref=v2.0.1"
+  source       = "github.com/nubisproject/nubis-terraform//worker?ref=v2.1.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -18,7 +18,7 @@ module "worker" {
 }
 
 module "storage" {
-  source                 = "github.com/nubisproject/nubis-terraform//storage?ref=v2.0.1"
+  source                 = "github.com/nubisproject/nubis-terraform//storage?ref=v2.1.0"
   region                 = "${var.region}"
   environment            = "${var.environment}"
   account                = "${var.account}"
@@ -28,7 +28,7 @@ module "storage" {
 }
 
 module "info" {
-  source      = "github.com/nubisproject/nubis-terraform//info?ref=v2.0.1"
+  source      = "github.com/nubisproject/nubis-terraform//info?ref=v2.1.0"
   region      = "${var.region}"
   environment = "${var.environment}"
   account     = "${var.account}"
@@ -125,7 +125,7 @@ resource "aws_security_group" "hypercored" {
 }
 
 module "dns" {
-  source       = "github.com/nubisproject/nubis-terraform//dns?ref=v2.0.1"
+  source       = "github.com/nubisproject/nubis-terraform//dns?ref=v2.1.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"

@@ -5,7 +5,7 @@
     ],
     "project_description": "DAT hypercored",
     "project_name": "hypercored",
-    "source_ami_project_version": "v2.0.1",
-    "project_version": "v2.0.1_{{env `GIT_COMMIT_SHA`}}"
+    "source_ami_project_version": "v2.1.0",
+    "project_version": "v2.1.0_{{env `GIT_COMMIT_SHA`}}"
   }
 }
