@@ -42,7 +42,7 @@ User=${project_name}-data
 Group=${project_name}-data
 WorkingDirectory=/data/${project_name}
 
-Env=HOME=/data/${project_name}
+Environment=HOME=/data/${project_name}
 
 ExecStart=/usr/bin/hypercored \
   --websockets \
