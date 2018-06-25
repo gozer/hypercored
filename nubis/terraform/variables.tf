@@ -18,8 +18,8 @@ variable "instance_types" {
   type = "map"
 
   default = {
-    prod      = "t2.micro"
-    stage     = "t2.large"
-    default   = "t2.nano"
+    prod    = "t2.micro"
+    stage   = "t2.large"
+    default = "t2.nano"
   }
 }

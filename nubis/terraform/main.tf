@@ -6,9 +6,9 @@ module "worker" {
   service_name = "${var.service_name}"
   ami          = "${var.ami}"
   purpose      = "hypercored"
-  
-  public       = true
-  
+
+  public = true
+
   security_group        = "${aws_security_group.hypercored.id}"
   security_group_custom = true
 
@@ -40,7 +40,7 @@ provider "aws" {
 
 # We need an Elastic IP
 resource "aws_eip" "hypercored" {
-  vpc   = true
+  vpc = true
 
   lifecycle {
     create_before_destroy = true
@@ -49,9 +49,10 @@ resource "aws_eip" "hypercored" {
 
 # And a special role to be able to bind it to ourselves
 resource "aws_iam_role_policy" "hypercored" {
-    name = "hypercored-eip-associate"
-    role = "${module.worker.role}"
-    policy = <<EOF
+  name = "hypercored-eip-associate"
+  role = "${module.worker.role}"
+
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -75,11 +76,11 @@ resource "aws_security_group" "hypercored" {
   vpc_id = "${module.info.vpc_id}"
 
   tags = {
-    Name           = "${var.service_name}-${var.environment}-hypercored"
-    Region         = "${var.region}"
-    Environment    = "${var.environment}"
-    Backup         = "true"
-    Shutdown       = "never"
+    Name        = "${var.service_name}-${var.environment}-hypercored"
+    Region      = "${var.region}"
+    Environment = "${var.environment}"
+    Backup      = "true"
+    Shutdown    = "never"
   }
 
   ingress {
@@ -104,11 +105,12 @@ resource "aws_security_group" "hypercored" {
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
     security_groups = [
-      "${module.info.ssh_security_group}"
+      "${module.info.ssh_security_group}",
     ]
   }
 
