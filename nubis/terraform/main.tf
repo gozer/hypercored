@@ -1,3 +1,8 @@
+provider "aws" {
+  region = "${var.region}"
+  version = "~> 1"
+}
+
 module "worker" {
   source       = "github.com/nubisproject/nubis-terraform//worker?ref=v2.3.0"
   region       = "${var.region}"
@@ -32,10 +37,6 @@ module "info" {
   region      = "${var.region}"
   environment = "${var.environment}"
   account     = "${var.account}"
-}
-
-provider "aws" {
-  region = "${var.region}"
 }
 
 # We need an Elastic IP
